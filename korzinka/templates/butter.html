@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <style>
+
+
+            .star-rating{
+     font-size: 0;
+    }
+    .star-rating__wrap{
+     display: inline-block;
+     font-size: 1rem;
+    }
+    .star-rating__wrap:after{
+     content: "";
+     display: table;
+     clear: both;
+    }
+    .star-rating__ico{
+     float: right;
+     padding-left: 2px;
+     cursor: pointer;
+     color: #FFB300;
+    }
+    .star-rating__ico:last-child{
+     padding-left: 0;
+    }
+    .star-rating__input{
+     display: none;
+    }
+    .star-rating__ico:hover:before,
+    .star-rating__ico:hover ~ .star-rating__ico:before,
+    .star-rating__input:checked ~ .star-rating__ico:before
+    {
+     content: "\f005";
+    }
+</style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простоквашино</title>
+    <!-- main css -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- -------------- -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+<body>
+    <!-- header -->
+    <header id="header">
+        <div class="navigation">
+            <div class="nav-brand">
+                <a href="{% url 'index' %}"><img style="width: 180px; height: 70px" src="{% static 'image/korzinka.png' %}"  alt=""></a>
+            </div>
+            <div class="nav-input">
+                <button class="catalog"  onclick="myFunction()" >
+                 <img src="{% static 'image/menu.png' %}" alt=""> <a href="/catalog/">Bo'limlar</a>
+                </button>
+                <form action="">
+                    <input type="text" placeholder="Mahsulot topish..."> <span><a href="/result/"><img src="{% static 'image/search.png' %}" alt=""></a></span>
+                </form>
+            </div>
+            <div class="nav-pages">
+                <ul>
+                    <li><a href="/izbranny/"> <i class="far fa-heart"></i><h5>Tanlangan</h5></a></li>
+                    <li><a href="/orders/"> <i class="fas fa-box"></i> <h5>Buyurtma</h5></a></li>
+                    <li><a href="/basket/"><i class="fas fa-shopping-cart"></i> <h5>Savat</h5></a></li>
+                </ul>
+            </div>
+            <div class="nav-contact">
+                <img src="{% static 'image/avatar.png' %}" alt="">
+                <h5>Алексей</h5>
+                <img src="{% static 'image/down arrow.png' %}" alt="">
+            </div>
+        </div>
+    </header>
+
+    <section class="butter">
+        <div class="milk-pages">
+            <ul>
+                <li><a href="{% url 'index' %}">Asosiy</a></li>>
+                <li><a href="/catalog/">Bo'lim</a></li>
+
+                <li><a href=""> {{mahsulot.batafsil}}, {{mahsulot.mamlakat}}, {{mahsulot.vazn}}</a></li>
+            </ul>
+        </div>
+        <div class="butter-title">
+            <h1>{{mahsulot.batafsil}}, {{mahsulot.mamlakat}}, {{mahsulot.vazn}}</h1>
+        </div>
+        <div class="butter-share">
+            <ul>
+                <li>mahsulot raqami {{mahsulot.id}}</li>
+                <li><i class="fas fa-star"></i></li>
+                <li><i class="fas fa-star"></i></li>
+                <li><i class="far fa-star"></i></li>
+                <li><i class="far fa-star"></i></li>
+                <li><i class="far fa-star"></i></li>
+                <li><a>sharh soni {{mahsulot.sharhlar|length}}</a></li>
+                <li><i class="fas fa-share-alt"></i>Bo'lishish</li>
+                <li><i class="far fa-heart"></i>Tanlanganlaga</li>
+            </ul>
+        </div>
+        <div class="butter-items">
+            <div class="butter-item">
+                <img style="width:400px; height: 300px" src="{{ mahsulot.rasm.url }}" alt="">
+            </div>
+            <div class="butter-item">
+                <div class="item-price">
+                    <div class="price-not">
+                        {{ mahsulot.narx }} so'm  <br>
+                        <span>Naqd pul</span>
+                    </div>
+                    <div class="price-yes">
+                        {{mahsulot.narx}} so'm <br>
+                        <span>Korzinka kartasi</span>
+                    </div>
+                </div>
+                <div class="shopping-cart">
+                    <button><i class="fas fa-shopping-cart"></i> Savatga</button>
+                </div>
+                <div class="bonus">
+                    <img src="{% static 'image/smile-gren.png' %}" alt="">
+                    <h5>Siz 10ta bonus oldingiz</h5>
+                </div>
+                <div class="mute">
+                    <i class="fas fa-volume-mute"></i><h5>Narx pasayganida ogohlantirish</h5>
+                </div>
+                <div class="brand">
+                    <h5>Brend</h5>
+                    <h5>{{mahsulot.brend}}</h5>
+                </div>
+                <div class="brand two">
+                    <h5>Ishlabchiqaruvchi</h5>
+                    <h5>{{mahsulot.mamlakat}}</h5>
+                </div>
+                <div class="brand">
+                    <h5>Qadoq</h5>
+                    <h5>{{mahsulot.vazn}}</h5>
+                </div>
+
+            </div>
+<!--            <div class="butter-item">-->
+<!--                <img src="image/butters.png" alt="">-->
+<!--            </div>-->
+        </div>
+        <section class="sale">
+            <div class="sale-title">
+                <h2>
+                    Oxshash mahsulotlar
+                </h2>
+            </div>
+            <div class="sale-items">
+                 {% for i in mah %}<a href="/butter/{{i.id}}/">
+                <div class="sale-item">
+                    <div class="img-content">
+                        <i class="far fa-heart"></i>
+                        {% if i.aksiya == 0 %}
+                        <h5></h5>
+                        {% else %}
+                        <h5>-{{i.aksiya}}%</h5>
+                        {% endif %}
+                        <img style="width: 230px; height: 160px" src="{{i.rasm.url}}" alt="">
+                    </div>
+                    <div class="money">
+                        <div class="left">{{i.narx}} so'm <p>Plastik karta</p></div>
+                        <div class="right">{{i.narx}} so'm <p>Naqd pul</p></div>
+                    </div>
+                    <h4>{{i.batafsil}}  {{i.vazn}}, {{i.mamlakat}}</h4>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <div class="but">
+                        <button class="button">
+                            Savatga
+                        </button>
+                    </div>
+                </div>
+                </a>{% endfor %}
+            </div>
+        </section>
+        <div class="review">
+            <div class="review-title">
+                <h1>Sharhlar</h1>
+            </div>
+            <div class="review-items">
+                <div class="review-stars">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <b>4 из 5</b>
+                    </div>
+                    <div class="reviews">
+                        <p>5</p>
+                        <div class="star">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>1</p>
+                    </div>
+                    <div class="reviews">
+                        <p>4</p>
+                        <div class="star">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <p>1</p>
+                    </div>
+                    <div class="reviews">
+                        <p>3</p>
+                        <div class="star">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <p>0</p>
+                    </div>
+                    <div class="reviews">
+                        <p>2</p>
+                        <div class="star">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <p>0</p>
+                    </div>
+                    <div class="reviews">
+                        <p>1</p>
+                        <div class="star">
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <p>1</p>
+                    </div>
+                </div>
+
+                <div class="comments">
+                    {% for i in sharhlar %}
+                    <div class="comment one">
+                        <i class="fas fa-user"></i>{{i.mijoz}} <br>
+                        {% if i.baho == 0 %}
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        {% endif %}
+                        {% if i.baho == 1 %}
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        {% endif %}
+                        {% if i.baho == 2 %}
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        {% endif %}
+                        {% if i.baho == 3 %}
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        {% endif %}
+                        {% if i.baho == 4 %}
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        {% endif %}
+                        {% if i.baho == 5 %}
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        {% endif %}
+                        {{i.sana}} <br> {{i.matn}}
+                    </div>
+                    {% endfor %}
+
+                    <div class="your-review">
+                        Sizning bahoyingiz
+                        <form action="" method="post"> {% csrf_token %}
+                            <br>
+                        <div class="form-group">
+                        <div class="star-rating">
+                        <div class="star-rating__wrap">
+                        <input class="star-rating__input" id="star-5" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-5" title="Alo"></label>
+                        <input class="star-rating__input" id="star-4" type="radio" name="rating" value="4">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-4" title="Yaxshi"></label>
+                        <input class="star-rating__input" id="star-3" type="radio" name="rating" value="3">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-3" title="Qonuqarli"></label>
+                        <input class="star-rating__input" id="star-2" type="radio" name="rating" value="2">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-2" title="Qonuqarsiz"></label>
+                        <input class="star-rating__input" id="star-1" type="radio" name="rating" value="1">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-1" title="Yomon"></label>
+                        </div>
+                        </div>
+                        </div>
+                        <textarea name="sh" id="" placeholder="Sharh qoldiring..." ></textarea> <br>
+                        <button class="btn">
+                            Jo'natish
+                        </button>
+                    </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <section class="sale">
+            <div class="sale-title">
+                <h2>
+                    Aksiya
+                </h2>
+                <button class="button">
+                    Hamma aksiyalar  <img src="{% static 'image/down arrow.png' %}" alt="">
+                </button>
+            </div>
+            <div class="sale-items">
+                {% for j in aksiya %}<a href="/butter/{{j.id}}/">
+                <div class="sale-item">
+                    <div class="img-content">
+                        <i class="far fa-heart"></i>
+                        <h5>-{{j.aksiya}}%</h5>
+                         <img style="width: 230px; height: 160px" src="{{ j.rasm.url}}" alt="">
+                    </div>
+                    <div class="money">
+                        <div class="left">{{j.narx}} so'm <p>Plastik karta</p></div>
+                        <div class="right">{{j.narx}} so'm <p>Naqd pul</p></div>
+                    </div>
+                    <h4>{{j.batafsil}}  {{j.vazn}}, {{j.mamlakat}}</h4>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <div class="but">
+                        <button class="button">
+                            Savatga
+                        </button>
+                    </div>
+                </div></a>
+                {% endfor %}
+            </div>
+        </section>
+    </section>
+
+    <!-- notes-catalog -->
+    <div id="myDropdown" class="dropdown-content">
+        <div class="catalog-items">
+            <div class="catalog-item">
+                {% for i in bolimlar %}
+                <ul>
+                    <li><a href="/catalog/{{i.id}}/">{{i.nom}}</a></li>
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="background">
+           <div class="items">
+                <div class="footer-brand">
+                    <img style="width: 100px; height: 70px" src="{% static 'image/footerkorzinka.jpg' %}" alt="">
+                </div>
+                <div class="footer-pages">
+                    <ul>
+                        <li><a href="">О компании</a></li>
+                        <li><a href="">Контакты</a></li>
+                        <li><a href="">Вакансии</a></li>
+                        <li><a href="">Статьи</a></li>
+                        <li><a href="">Политика обработки персональных данных</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <img src="{% static 'image/Social.png' %}" alt="">
+                </div>
+                <div class="footer-con"><img src="{% static 'image/Frame 156.png' %}" alt=""> </div>
+            </div>
+        </div>
+
+    </footer>
+
+    <!-- modal -->
+    <div class="container">
+        <div class="login">
+            <span class="modal-close">X</span>
+            <div class="title">
+                <h2>Вход</h2>
+            </div>
+            <form action="">
+                <label for="">Телефон</label><br>
+                <input type="text" placeholder="+998">
+            </form>
+            <button class="button">
+                Вход
+            </button>
+            <div class="pages">
+                <div class="page-item">
+                    Регистрация
+                </div>
+                <div class="page-item two">
+                    Забыли пароль?
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- THE END -->
+    <script src="{% static 'js/app.js' %}"></script>

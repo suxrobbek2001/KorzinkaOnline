@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- -------------- -->
+</head>
+<body>
+    <!-- header -->
+    <header id="header">
+        <div class="navigation">
+            <div class="nav-brand">
+                <a href="index.html"><img style="width: 180px; height: 70px" src="{% static 'image/korzinka.png' %}"  alt=""></a>
+            </div>
+            <div class="nav-input">
+                <button class="catalog"  onclick="myFunction()" >
+                 <img src="{% static 'image/menu.png'%}" alt=""> <a href="/catalog/">Bo'limlar</a>
+                </button>
+                <form action="">
+                    <input type="text" placeholder="Найти товар"> <span><a href="/result/"><img src="{% static 'image/search.png' %}" alt=""></a></span>
+                </form>
+            </div>
+            <div class="nav-pages">
+                <ul>
+                    <li><a href="/izbranny/"> <i class="far fa-heart"></i><h5>Tanlangan</h5></a></li>
+                    <li><a href="/orders/"> <i class="fas fa-box"></i> <h5>Buyurtma</h5></a></li>
+                    <li><a href="/basket/"><i class="fas fa-shopping-cart"></i> <h5>Savat</h5></a></li>
+                </ul>
+            </div>
+            <div class="nav-contact">
+                <img src="{% static 'image/avatar.png' %}" alt="">
+                <h5>Алексей</h5>
+                <img src="{% static 'image/down arrow.png' %}" alt="">
+            </div>
+        </div>
+    </header>
+
+    <!-- notes-catalog -->
+    <div id="myDropdown" class="dropdown-content">
+        <div class="catalog-items">
+            <div class="catalog-item">
+                {% for i in bolimlar %}
+                <ul>
+                    <li><a href="/catalog/{{i.id}}/">{{i.nom}}</a></li>
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <section class="milk">
+        <div class="milk-pages">
+            <ul>
+                <li><a href="{% url 'index' %}">Asosiy</a></li>>
+                <li><a href="/catalog/">Bolim</a></li> >
+                <li><a href="">{{ bolim.nom }} </a></li>
+            </ul>
+        </div>
+        <div class="milk-title">
+            <h1>{{bolim.nom}}</h1>
+        </div>
+<!--        <div class="milk-page">-->
+<!--            <ul>-->
+<!--                <li><a href="">Товары нашего производства</a></li>-->
+<!--                <li><a href="">Полезное питание</a></li>-->
+<!--                <li><a href="">Без ГМО</a></li>-->
+<!--            </ul>-->
+<!--        </div>-->
+       
+        <div class="milk-items">
+            <div class="filter-menu">
+                <button class="filter">
+                    Фильтр
+                </button>
+                <div class="price">
+                    <h5>Цена</h5>
+                    <button>
+                        Очистить                   
+                    </button>
+                </div>
+                <div class="inputs">
+                    <input type="text" placeholder="1">&nbsp;--&nbsp;
+                    <input type="text" placeholder="100">
+                </div>
+                <div class="line">
+                    <img src="{% static 'image/line.png' %}" alt="">
+                </div>
+                <div class="pages">
+                    <ul>
+                        <li>Sut</li>
+                        <li>Сливки</li>
+                        <li>Tuhum</li>
+                    </ul>
+                </div>
+                <div class="center">
+                    <input type="checkbox"><label for="">В наличии</label>
+                </div>
+                <button class="button">
+                    Применить
+                </button>
+            </div>
+            <section class="sale">
+                <div class="buttons">
+                    <button class="btn">
+                    Фильтр 4 &nbsp; X
+                    </button>
+                    <button class="btn">
+                    Цена от 99 до 2599 &nbsp; X
+                    </button>
+                    <button class="btn active">
+                    Очистить фильтры &nbsp; X
+                    </button>
+                </div>
+                <div style="flex-wrap:  wrap; align-items: center; gap: 15px; align-content: space-between;
+                 justify-content: center;" class="sale-items">
+                    {% for m in mahsulotlar %}
+                     <a href="/butter/{{m.id}}/">
+                        <div class="sale-item">
+                            <div class="img-content">
+                                <i class="far fa-heart"></i>
+                                <h5>-{{m.aksiya}}%</h5>
+                                <img style="width: 180px; height: 160px" src="{{m.rasm.url}}" alt="">
+                            </div>
+                            <div class="money">
+                                <div class="left">{{m.narx}}so'm <p>Plastik karta</p></div>
+                                <div class="right">{{m.narx}}so'm <p>Nahd</p></div>
+                            </div>
+                            <h4>{{m.batafsil}}  {{m.vazn}}, {{m.mamlakat}}</h4>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <div class="but">
+                                <button class="button">
+                                    Savatga
+                                </button>
+                            </div><br><br>
+                        </div>
+                     </a>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+        <div class="milk-all_cards">
+            <a href="">Показать ещё</a>
+        </div>
+       <div class="number-pages_div">
+            <ul class="number-pages">
+            <li><a href=""><<</a></li>
+            <li><a href=""><</a></li>
+            <li><a href="">1</a></li>
+            <li><a href="">2</a></li>
+            <li><a href="">3</a></li>
+            <li><a href="">4</a></li>
+            <li><a href="">5</a></li>
+            <li><a href="">6</a></li>
+            <li><a href="">7</a></li>
+            <li><a href="">8</a></li>
+            <li><a href="">></a></li>
+            <li><a href="">>></a></li>
+        </ul>
+       </div>
+    </section>
+
+
+
+    <!-- modal -->
+    <div class="container">
+        <div class="login">
+            <span class="modal-close">X</span>
+            <div class="title">
+                <h2>Вход</h2>
+            </div>
+            <form action="">
+                <label for="">Телефон</label><br>
+                <input type="text" placeholder="+7 912">
+            </form>
+            <button class="button">
+                Вход
+            </button>
+            <div class="pages">
+                <div class="page-item">
+                    Регистрация
+                </div>
+                <div class="page-item two">
+                    Забыли пароль?
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="background">
+           <div class="items">
+                <div class="footer-brand">
+                    <img style="width: 100px; height: 70px" src="{% static 'image/footerkorzinka.jpg' %}" alt="">
+                </div>
+                <div class="footer-pages">
+                    <ul>
+                        <li><a href="">О компании</a></li>
+                        <li><a href="">Контакты</a></li>
+                        <li><a href="">Вакансии</a></li>
+                        <li><a href="">Статьи</a></li>
+                        <li><a href="">Политика обработки персональных данных</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <img src="{% static 'image/Social.png' %}" alt="">
+                </div>
+                <div class="footer-con"><img src="{% static 'image/Frame 156.png' %}" alt=""> </div>
+            </div>
+        </div>
+            
+    </footer>
+
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>
